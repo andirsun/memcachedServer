@@ -1,0 +1,16 @@
+{
+  "name": "memcachedserver",
+  "version": "1.0.0",
+  "description": "memcached server in node js with framework express js ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Anderson Laverde Gracia",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "memcached": "^2.2.2",
+    "nodemon": "^1.19.4"
+  }
+}
