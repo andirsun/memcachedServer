@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { ICacheObject } from './interfaces/cacheObject.interface';
 const Memcached = require('memcached');// Memcached npm module
 // Instance of memcached 
 var memcached = new Memcached();
@@ -36,7 +37,7 @@ export class CacheService {
   /*
     This function Get the value for the given key.
   */
-  async getKeyValue(key : string){
+  async getKeyValue(key : string) : Promise<ICacheObject>{
     // Transform the callback into a promise to be used in the controller
     return new Promise((resolve,reject) =>{
       // Using memcached api to get a key value
@@ -51,7 +52,7 @@ export class CacheService {
     An operation that stores data, but only if no one else has updated the data since you read it last. 
     Useful for resolving race conditions on updating cache data.
   */
-  async getsKeyValue(key : string){
+  async getsKeyValue(key : string):Promise<ICacheObject>{
     // Transform the callback into a promise to be used in the controller
     return new Promise((resolve,reject) =>{
       // Using memcached api to get a key value
@@ -65,7 +66,7 @@ export class CacheService {
   /*
     this function Replaces the value in memcached
   */
-  async replaceValueofKey(key : string, newValue : string, lifeTime : number){
+  async replaceValueofKey(key : string, newValue : string, lifeTime : number):Promise<boolean>{
     // Transform the callback into a promise to be used in the controller
     return new Promise((resolve,reject) =>{
       // Using memcached api to get a key value
@@ -78,7 +79,7 @@ export class CacheService {
   /*
     This function Add the given value string to the value of an existing item.
   */
-  async appendValueToKey(key : string, appendValue : any){
+  async appendValueToKey(key : string, appendValue : any):Promise<boolean>{
     // Transform the callback into a promise to be used in the controller
     return new Promise((resolve,reject) =>{
       // Using memcached api
@@ -91,7 +92,7 @@ export class CacheService {
   /*
     This function Add the given value string to the end of value of an existing item.
   */
-  async prependValueToKey(key : string, prependValue : string){
+  async prependValueToKey(key : string, prependValue : string):Promise<boolean>{
     // Transform the callback into a promise to be used in the controller
     return new Promise((resolve,reject) =>{
       // Using memcached api
@@ -110,7 +111,7 @@ export class CacheService {
     - lifetime: Number, how long the data needs to be replaced measured in seconds
     - cas: String the CAS value
   */
-  async casValueToKey(key : string, value : string, lifeTime : number){
+  async casValueToKey(key : string, value : string, lifeTime : number):Promise<ICacheObject>{
     // Transform the callback into a promise to be used in the controller
     return new Promise((resolve,reject) =>{
       // Using memcached api 

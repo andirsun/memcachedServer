@@ -1,6 +1,7 @@
 import { Controller, Get, Res, HttpStatus, Query, Post, Body, Put } from '@nestjs/common';
 import { CacheService } from './cache.service';
 import { CreateCacheObjectDTO } from './dto/cacheObject.dto';
+import { KeyObject } from 'crypto';
 
 @Controller('cache')
 export class CacheController {
@@ -71,13 +72,13 @@ export class CacheController {
   async getsKey(@Res() res,@Query('key')key : string){
     // Usign the cache service to save the key -> value in the memcache server
     this.cacheService.getsKeyValue(key)
-      .then(value =>{
+      .then(KeyObject =>{
         // afirmative
-        if(value){
+        if(KeyObject){
           return res.status(HttpStatus.OK).json({
             response: true,
             content: {
-              key : value
+              KeyObject
             }
           });
         }else{
