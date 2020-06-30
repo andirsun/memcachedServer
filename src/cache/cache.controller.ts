@@ -11,7 +11,7 @@ export class CacheController {
   @Post('/setKey')
   async setKey(@Res() res,@Body()body : any){
     // Usign the cache service to save the key -> value in the memcache server
-    this.cacheService.setKey(body.key,body.value,3600)
+    this.cacheService.setKey(body.key,body.value,body.lifeTime)
       .then(response =>{
         // afirmative
         return res.status(HttpStatus.OK).json({
@@ -22,7 +22,7 @@ export class CacheController {
         });
       })
       .catch(err=>{
-        // handling errro
+        // handling promise error
         return res.status(HttpStatus.BAD_REQUEST).json({
           response: false,
           content: {
@@ -30,6 +30,6 @@ export class CacheController {
             err
           }
         });
-      })
+      });
   }
 }
