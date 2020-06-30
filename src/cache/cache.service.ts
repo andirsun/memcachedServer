@@ -28,7 +28,6 @@ export class CacheService {
       });  
     });
   }
-
   async touchKey(key :string, lifeTime: number){
     return memcached.touch(key, lifeTime,err =>{
       console.log(err);
@@ -111,15 +110,20 @@ export class CacheService {
     - lifetime: Number, how long the data needs to be replaced measured in seconds
     - cas: String the CAS value
   */
-  async casValueToKey(key : string, value : string, lifeTime : number, cas : string ){
+  async casValueToKey(key : string, value : string, lifeTime : number){
     // Transform the callback into a promise to be used in the controller
     return new Promise((resolve,reject) =>{
-      // Using memcached api to get a key value
+      // Using memcached api 
       memcached.gets(key, function (err, data) {
+        
         if (err) return reject(err);
-        memcached.cas(key, value, data.cas, 10, function (err) { /* stuff */ });
-        if (err) return reject(err);
-        resolve(data)
+        //data has 2 value , data.key & data.cas
+        console.log(data);
+        memcached.cas(key, value, data.cas, lifeTime, function (err) { /* stuff */ 
+          if (err) return reject(err);
+          resolve(data)
+        });
+        
       });
     });
   }

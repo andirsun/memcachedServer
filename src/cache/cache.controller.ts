@@ -209,22 +209,22 @@ export class CacheController {
       });
   }
 
-  @Put('/prependValueToKey')
+  @Put('/casValueKey')
   async casValueToKey(@Res() res,@Body()body : any){
     //Setting properties
     let keyName : string = body.key;
     let value : string = body.value || "";
     let lifeTime : number = body.lifeTime || 10;
-    let cas : string = body.value || "";
     
     //Memcache service powered by memcache api
-    this.cacheService.casValueToKey(keyName,value,lifeTime, cas)
+    this.cacheService.casValueToKey(keyName,value,lifeTime)
       .then(value =>{
         // afirmative
         if(value){
           return res.status(HttpStatus.OK).json({
             response: true,
             content: {
+              value
             }
           });
         }else{
