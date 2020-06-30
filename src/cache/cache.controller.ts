@@ -71,7 +71,7 @@ export class CacheController {
   async reaplaceKeyValue(@Res() res,@Body()body : any){
     //Setting properties
     let keyName : string = body.key;
-    let newValue : any = body.newValue;
+    let newValue : string = body.newValue;
     let lifeTime : number = parseInt(body.lifeTime);
     //Memcache service powered by memcache api
     this.cacheService.replaceValueofKey(keyName,newValue,lifeTime)
@@ -103,4 +103,41 @@ export class CacheController {
         });
       });
   }
+
+  @Put('/appendValueToKey')
+  async appendValueToKey(@Res() res,@Body()body : any){
+    //Setting properties
+    let keyName : string = body.key;
+    let newValue : string = body.newValue || "";
+    //Memcache service powered by memcache api
+    this.cacheService.appendValueToKey(keyName,newValue)
+      .then(value =>{
+        // afirmative
+        if(value){
+          return res.status(HttpStatus.OK).json({
+            response: true,
+            content: {
+              message : `The key was updated succesfully`
+            }
+          });
+        }else{
+          return res.status(HttpStatus.BAD_REQUEST).json({
+            response: false,
+            content: {
+              message : `Key : ${body.key} expired or not found`
+            }
+          });
+        }
+      })
+      .catch(err=>{
+        // handling promise error
+        return res.status(HttpStatus.BAD_REQUEST).json({
+          response: false,
+          content: {
+            err
+          }
+        });
+      });
+  }
+  
 }

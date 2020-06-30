@@ -18,7 +18,7 @@ export class CacheService {
   }
   
   // this function Stores a new value in Memcached.
-  async setKey(key : string, value : any , timeExp:number) : Promise<boolean>{
+  async setKey(key : string, value : string , timeExp:number) : Promise<boolean>{
     // Transform the callback into a promise to be used in the controller
     return new Promise((resolve,reject) =>{
       // Using memcached api to set a key
@@ -50,7 +50,7 @@ export class CacheService {
   /*
     this function Replaces the value in memcached
   */
-  async replaceValueofKey(key : string, newValue : any, lifeTime : number){
+  async replaceValueofKey(key : string, newValue : string, lifeTime : number){
     // Transform the callback into a promise to be used in the controller
     return new Promise((resolve,reject) =>{
       // Using memcached api to get a key value
@@ -60,6 +60,21 @@ export class CacheService {
       });  
     });
   }
+  /*
+    This function Add the given value string to the value of an existing item.
+  */
+  async appendValueToKey(key : string, appendValue : any){
+    // Transform the callback into a promise to be used in the controller
+    return new Promise((resolve,reject) =>{
+      // Using memcached api to get a key value
+      memcached.append(key, appendValue, function (err) {
+        if (err) return reject(err);
+        resolve(true)
+      });  
+    });
+  }
+
+  
 
   
 }
