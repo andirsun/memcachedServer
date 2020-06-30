@@ -73,8 +73,20 @@ export class CacheService {
       });  
     });
   }
+  /*
+  */
+  async prependValueToKey(key : string, prependValue : any){
+    // Transform the callback into a promise to be used in the controller
+    return new Promise((resolve,reject) =>{
+      // Using memcached api to get a key value
+      memcached.prepend(key, prependValue, function (err) {
+        if (err) return reject(err);
+        resolve(true)
+      });  
+    });
+  }
 
-  
+
 
   
 }

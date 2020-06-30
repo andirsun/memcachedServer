@@ -139,5 +139,41 @@ export class CacheController {
         });
       });
   }
-  
+
+  @Put('/prependValueToKey')
+  async prependValueToKey(@Res() res,@Body()body : any){
+    //Setting properties
+    let keyName : string = body.key;
+    let newValue : string = body.newValue || "";
+    //Memcache service powered by memcache api
+    this.cacheService.prependValueToKey(keyName,newValue)
+      .then(value =>{
+        // afirmative
+        if(value){
+          return res.status(HttpStatus.OK).json({
+            response: true,
+            content: {
+              message : `The key was updated succesfully`
+            }
+          });
+        }else{
+          return res.status(HttpStatus.BAD_REQUEST).json({
+            response: false,
+            content: {
+              message : `Key : ${body.key} expired or not found`
+            }
+          });
+        }
+      })
+      .catch(err=>{
+        // handling promise error
+        return res.status(HttpStatus.BAD_REQUEST).json({
+          response: false,
+          content: {
+            err
+          }
+        });
+      });
+  }
+
 }
