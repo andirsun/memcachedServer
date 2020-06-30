@@ -67,6 +67,39 @@ export class CacheController {
       });
   }
 
+  @Get('/getsKey')
+  async getsKey(@Res() res,@Query('key')key : string){
+    // Usign the cache service to save the key -> value in the memcache server
+    this.cacheService.getsKeyValue(key)
+      .then(value =>{
+        // afirmative
+        if(value){
+          return res.status(HttpStatus.OK).json({
+            response: true,
+            content: {
+              key : value
+            }
+          });
+        }else{
+          return res.status(HttpStatus.BAD_REQUEST).json({
+            response: false,
+            content: {
+              message : `Key : ${key} expired or not found`
+            }
+          });
+        }
+      })
+      .catch(err=>{
+        // handling promise error
+        return res.status(HttpStatus.BAD_REQUEST).json({
+          response: false,
+          content: {
+            err
+          }
+        });
+      });
+  }
+
   @Put('/replaceKeyValue')
   async reaplaceKeyValue(@Res() res,@Body()body : any){
     //Setting properties
@@ -161,6 +194,44 @@ export class CacheController {
             response: false,
             content: {
               message : `Key : ${body.key} expired or not found`
+            }
+          });
+        }
+      })
+      .catch(err=>{
+        // handling promise error
+        return res.status(HttpStatus.BAD_REQUEST).json({
+          response: false,
+          content: {
+            err
+          }
+        });
+      });
+  }
+
+  @Put('/prependValueToKey')
+  async casValueToKey(@Res() res,@Body()body : any){
+    //Setting properties
+    let keyName : string = body.key;
+    let value : string = body.value || "";
+    let lifeTime : number = body.lifeTime || 10;
+    let cas : string = body.value || "";
+    
+    //Memcache service powered by memcache api
+    this.cacheService.casValueToKey(keyName,value,lifeTime, cas)
+      .then(value =>{
+        // afirmative
+        if(value){
+          return res.status(HttpStatus.OK).json({
+            response: true,
+            content: {
+            }
+          });
+        }else{
+          return res.status(HttpStatus.BAD_REQUEST).json({
+            response: false,
+            content: {
+              message : `Key do not match`
             }
           });
         }

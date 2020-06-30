@@ -48,6 +48,22 @@ export class CacheService {
     });
   }
   /*
+    This function Check And Set (or Compare And Swap).
+    An operation that stores data, but only if no one else has updated the data since you read it last. 
+    Useful for resolving race conditions on updating cache data.
+  */
+  async getsKeyValue(key : string){
+    // Transform the callback into a promise to be used in the controller
+    return new Promise((resolve,reject) =>{
+      // Using memcached api to get a key value
+      memcached.gets(key, function (err, data) {
+        if (err) return reject(err);
+        //data has 2 params data.key & data.cas
+        resolve(data)
+      });  
+    });
+  }
+  /*
     this function Replaces the value in memcached
   */
   async replaceValueofKey(key : string, newValue : string, lifeTime : number){
@@ -66,7 +82,7 @@ export class CacheService {
   async appendValueToKey(key : string, appendValue : any){
     // Transform the callback into a promise to be used in the controller
     return new Promise((resolve,reject) =>{
-      // Using memcached api to get a key value
+      // Using memcached api
       memcached.append(key, appendValue, function (err) {
         if (err) return reject(err);
         resolve(true)
@@ -74,15 +90,37 @@ export class CacheService {
     });
   }
   /*
+    This function Add the given value string to the end of value of an existing item.
   */
-  async prependValueToKey(key : string, prependValue : any){
+  async prependValueToKey(key : string, prependValue : string){
     // Transform the callback into a promise to be used in the controller
     return new Promise((resolve,reject) =>{
-      // Using memcached api to get a key value
+      // Using memcached api
       memcached.prepend(key, prependValue, function (err) {
         if (err) return reject(err);
         resolve(true)
       });  
+    });
+  }
+  /*
+    Check And Set (or Compare And Swap). An operation that stores data, but only if no one else has updated the data since you read it last.
+    Useful for resolving race conditions on updating cache data.
+
+    - key: String the name of the key
+    - value: Mixed Either a buffer, JSON, number or string that you want to store.
+    - lifetime: Number, how long the data needs to be replaced measured in seconds
+    - cas: String the CAS value
+  */
+  async casValueToKey(key : string, value : string, lifeTime : number, cas : string ){
+    // Transform the callback into a promise to be used in the controller
+    return new Promise((resolve,reject) =>{
+      // Using memcached api to get a key value
+      memcached.gets(key, function (err, data) {
+        if (err) return reject(err);
+        memcached.cas(key, value, data.cas, 10, function (err) { /* stuff */ });
+        if (err) return reject(err);
+        resolve(data)
+      });
     });
   }
 
