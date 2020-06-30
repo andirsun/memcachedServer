@@ -18,13 +18,14 @@ export class CacheService {
   }
   
 
-  async setKey(key : string, value :string , lifeTime : number){
+  async setKey(key : string, value : any , timeExp:number) : Promise<boolean>{
+    // Transform the callback into a promise to be used in the controller
     return new Promise((resolve,reject) =>{
-
-      memcached.set('foo', 'bar', 10, function (err) {
+      // Using memcached api to set a key
+      memcached.set(key, value, timeExp, function (err) {
         if (err) return reject(err);
         resolve(true)
-    })  
+      });  
     });
   }
 
@@ -34,12 +35,14 @@ export class CacheService {
     });
   }
 
-  async getValueObject(key : string){
-    return memcached.get(key, function (err, data) {
-      console.log(`Key ${key} : ${data}`);
-      if(err) {
-        console.log(err);
-      }
+  async getKeyValue(key : string){
+    // Transform the callback into a promise to be used in the controller
+    return new Promise((resolve,reject) =>{
+      // Using memcached api to get a key value
+      memcached.get(key, function (err, data) {
+        if (err) return reject(err);
+        resolve(data)
+      });  
     });
   }
 
