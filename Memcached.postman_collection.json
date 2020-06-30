@@ -1,0 +1,259 @@
+{
+	"info": {
+		"_postman_id": "4a591318-c332-46f4-9e61-a6d67526b89f",
+		"name": "Memcached",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Set Key",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "key",
+							"value": "anderKey2",
+							"type": "text"
+						},
+						{
+							"key": "value",
+							"value": "Anderson Laverde Gracia",
+							"type": "text"
+						},
+						{
+							"key": "lifeTime",
+							"value": "3600",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:3000/cache/setKey",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"cache",
+						"setKey"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Key Value",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/cache/getKey?key=anderKey",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"cache",
+						"getKey"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "anderKey"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Gets Key Value CAS",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": []
+				},
+				"url": {
+					"raw": "http://localhost:3000/cache/getsKey?key=anderKey2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"cache",
+						"getsKey"
+					],
+					"query": [
+						{
+							"key": "key",
+							"value": "anderKey2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Value of a Key",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "key",
+							"value": "anderKey",
+							"type": "text"
+						},
+						{
+							"key": "newValue",
+							"value": "Laverde Gracia",
+							"type": "text"
+						},
+						{
+							"key": "lifeTime",
+							"value": "3600",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:3000/cache/replaceKeyValue",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"cache",
+						"replaceKeyValue"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Append Value to  Key",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "key",
+							"value": "test1",
+							"type": "text"
+						},
+						{
+							"key": "newValue",
+							"value": "def",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:3000/cache/appendValueToKey",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"cache",
+						"appendValueToKey"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "prepend Value to  Key",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "key",
+							"value": "test1",
+							"type": "text"
+						},
+						{
+							"key": "newValue",
+							"value": "123",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:3000/cache/prependValueToKey",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"cache",
+						"prependValueToKey"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cas Value of a Key",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "key",
+							"value": "anderKey2",
+							"type": "text"
+						},
+						{
+							"key": "newValue",
+							"value": "Gracia",
+							"type": "text"
+						},
+						{
+							"key": "lifeTime",
+							"value": "3600",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:3000/cache/casValueKey",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"cache",
+						"casValueKey"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
