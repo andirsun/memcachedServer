@@ -1,5 +1,14 @@
 import { Injectable } from '@nestjs/common';
-var Memcached = require('memcached');
+const Memcached = require('memcached');// Memcached npm module
+// Instance of memcached 
+var memcached = new Memcached();
+
+/*conection with memcached server*/ 
+memcached.connect( 'localhost:11211', function( err, conection){
+  /* first step: conection , before execute conection install memcached in the host with sudo apt-get install memcached*/
+  if( err ) console.log( conection.server,'Error in conection to memcached server');
+  else console.log("success conection");
+});
 
 @Injectable()
 export class CacheService {
@@ -7,17 +16,12 @@ export class CacheService {
   constructor(){
     
   }
-  memcached = new Memcached('localhost:11211', {retries:10,retry:10000,remove:true,failOverServers:['192.168.0.103:11211']});
   
 
   async setKey(key : string, value :string , lifeTime : number){
-    this.memcached.connect( '192.168.0.103:11211', function( err, conn ){
-      if( err ) throw new Error( err );
-      console.log( conn.server );
-    });
     return new Promise((resolve,reject) =>{
 
-      this.memcached.set('foo', 'bar', 10, function (err) {
+      memcached.set('foo', 'bar', 10, function (err) {
         if (err) return reject(err);
         resolve(true)
     })  
@@ -25,13 +29,13 @@ export class CacheService {
   }
 
   async touchKey(key :string, lifeTime: number){
-    return this.memcached.touch(key, lifeTime,err =>{
+    return memcached.touch(key, lifeTime,err =>{
       console.log(err);
     });
   }
 
   async getValueObject(key : string){
-    return this.memcached.get(key, function (err, data) {
+    return memcached.get(key, function (err, data) {
       console.log(`Key ${key} : ${data}`);
       if(err) {
         console.log(err);
