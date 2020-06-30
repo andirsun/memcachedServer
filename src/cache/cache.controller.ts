@@ -1,4 +1,4 @@
-import { Controller, Get, Res, HttpStatus } from '@nestjs/common';
+import { Controller, Get, Res, HttpStatus, Query, Post, Body } from '@nestjs/common';
 import { CacheService } from './cache.service';
 
 @Controller('cache')
@@ -8,29 +8,28 @@ export class CacheController {
     private cacheService : CacheService
   ){}
 
-  @Get('/test')
-  async testCache(@Res() res){
-    this.cacheService.setKey('first','hola mundo',3600)
+  @Post('/setKey')
+  async setKey(@Res() res,@Body()body : any){
+    // Usign the cache service to save the key -> value in the memcache server
+    this.cacheService.setKey(body.key,body.value,3600)
       .then(response =>{
-        console.log(response);
+        // afirmative
+        return res.status(HttpStatus.OK).json({
+          response: true,
+          content: {
+            message : `Key ${body.key} was saved!`
+          }
+        });
       })
       .catch(err=>{
-        console.log(err);
+        // handling errro
+        return res.status(HttpStatus.BAD_REQUEST).json({
+          response: false,
+          content: {
+            message : `Key ${body.key} wasnt saved!`,
+            err
+          }
+        });
       })
-    // this.cacheService.setKey('first','hola mundo',3600)
-    //   .then(response =>{
-        
-    //     this.cacheService.getValueObject('first')
-    //     .then(value=>{
-          
-    //     }) 
-    //   })
-    
-    return res.status(HttpStatus.OK).json({
-      response: 2,
-      content: {
-        
-      }
-    });
   }
 }
