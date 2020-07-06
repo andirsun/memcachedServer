@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { ICacheObject } from './interfaces/cacheObject.interface';
+import { ICacheObject } from '../domain/interfaces/cacheObject.interface';
 const Memcached = require('memcached');// Memcached npm module
 // Instance of memcached 
 var memcached = new Memcached();
@@ -7,8 +7,8 @@ var memcached = new Memcached();
 /*conection with memcached server*/ 
 memcached.connect( 'localhost:11211', function( err, conection){
   /* first step: conection , before execute conection install memcached in the host with sudo apt-get install memcached*/
-  if( err ) console.log( conection.server,'Error in conection to memcached server');
-  else console.log("success conection");
+  if( err ) console.log( conection.server,'ERROR in conection to MEMCACHED server');
+  else console.log("SUCCESS conection to MEMCACHED server");
 });
 
 @Injectable()

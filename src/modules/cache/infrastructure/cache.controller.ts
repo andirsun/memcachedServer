@@ -1,8 +1,6 @@
 import { Controller, Get, Res, HttpStatus, Query, Post, Body, Put } from '@nestjs/common';
-import { CacheService } from './cache.service';
-import { CreateCacheObjectDTO } from './dto/cacheObject.dto';
-import { KeyObject } from 'crypto';
-
+import { CacheService } from '../application/cache.service';
+import { CreateCacheObjectDTO } from '../domain/dto/cacheObject.dto';
 @Controller('cache')
 export class CacheController {
 

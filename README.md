@@ -50,8 +50,6 @@ testing conection in default port (11211)
 ```bash
 $ telnet localhost 11211
 ```
-run the server
-
 - MacOs (need to have homebrew install)
 Install memcached throw 
 ```bash
