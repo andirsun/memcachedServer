@@ -1,8 +1,8 @@
 {
   "name": "cache-server",
   "version": "0.0.1",
-  "description": "",
-  "author": "",
+  "description": "Memcached implementation in NestJs Framework",
+  "author": "Anderson Laverde Gracia",
   "private": true,
   "license": "UNLICENSED",
   "scripts": {

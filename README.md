@@ -28,12 +28,53 @@
 
 Memcache implementation in NestJs aplication.
 
+## Architecture
+
+This project use the Hexagonal Architecture with 3 level of folders in every single module
+- Domain : Bussines logic (interfaces, dto's)
+- Application : Briedge between domain and infrastructure
+- Infrastructure : All files that have a conection with external requests (controllers, modules)
+
 ## Installation
-- First step : install memcached server on the machine (local - server)
+First step : install memcached server on the machine (local - server)
+- Linux
+Install memcached server
 ```bash
 $ apt install memcached
 ```
-- Install dependencies
+starting the server
+```bash
+$ sudo service memcached start
+```
+testing conection in default port (11211)
+```bash
+$ telnet localhost 11211
+```
+run the server
+
+- MacOs (need to have homebrew install)
+Install memcached throw 
+```bash
+$ brew install memcached
+```
+Install lunchy to quick stop and run server
+```bash
+$ gem install lunchy
+```
+start/stop the memcached server
+```bash
+$ mkdir ~/Library/LaunchAgents
+$ cp /usr/local/Cellar/memcached/$VERSION/homebrew.mxcl.memcached.plist ~/Library/LaunchAgents/
+$ lunchy start memcached
+$ lunchy stop memcached
+```
+testing conection in default port (11211)
+```bash
+$ memcached -V
+$ telnet localhost 11211
+```
+
+Second Step : install dependencies
 ```bash
 $ npm install
 ```
