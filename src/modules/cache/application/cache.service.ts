@@ -19,9 +19,9 @@ export class CacheService {
   }
   
   // this function Stores a new value in Memcached.
-  async setKey(key : string, value : string , timeExp:number) : Promise<boolean>{
+  public async setKey(key : string, value : string , timeExp:number) : Promise<boolean>{
     // Transform the callback into a promise to be used in the controller
-    return new Promise((resolve,reject) =>{
+    return await new Promise((resolve,reject) =>{
       // Using memcached api to set a key
       memcached.set(key, value, timeExp, function (err) {
         if (err) return reject(err);
@@ -29,15 +29,10 @@ export class CacheService {
       });  
     });
   }
-  async touchKey(key :string, lifeTime: number){
-    return memcached.touch(key, lifeTime,err =>{
-      console.log(err);
-    });
-  }
   /*
     This function Get the value for the given key.
   */
-  async getKeyValue(key : string) : Promise<ICacheObject>{
+  public async getKeyValue(key : string) : Promise<string>{
     // Transform the callback into a promise to be used in the controller
     return new Promise((resolve,reject) =>{
       // Using memcached api to get a key value
@@ -52,7 +47,7 @@ export class CacheService {
     An operation that stores data, but only if no one else has updated the data since you read it last. 
     Useful for resolving race conditions on updating cache data.
   */
-  async getsKeyValue(key : string):Promise<ICacheObject>{
+  public async getsKeyValue(key : string):Promise<ICacheObject>{
     // Transform the callback into a promise to be used in the controller
     return new Promise((resolve,reject) =>{
       // Using memcached api to get a key value
@@ -66,7 +61,7 @@ export class CacheService {
   /*
     this function Replaces the value in memcached
   */
-  async replaceValueofKey(key : string, newValue : string, lifeTime : number):Promise<boolean>{
+  public async replaceValueofKey(key : string, newValue : string, lifeTime : number):Promise<boolean>{
     // Transform the callback into a promise to be used in the controller
     return new Promise((resolve,reject) =>{
       // Using memcached api to get a key value
@@ -79,7 +74,7 @@ export class CacheService {
   /*
     This function Add the given value string to the value of an existing item.
   */
-  async appendValueToKey(key : string, appendValue : any):Promise<boolean>{
+  public async appendValueToKey(key : string, appendValue : any):Promise<boolean>{
     // Transform the callback into a promise to be used in the controller
     return new Promise((resolve,reject) =>{
       // Using memcached api
@@ -92,7 +87,7 @@ export class CacheService {
   /*
     This function Add the given value string to the end of value of an existing item.
   */
-  async prependValueToKey(key : string, prependValue : string):Promise<boolean>{
+  public async prependValueToKey(key : string, prependValue : string):Promise<boolean>{
     // Transform the callback into a promise to be used in the controller
     return new Promise((resolve,reject) =>{
       // Using memcached api
@@ -111,7 +106,7 @@ export class CacheService {
     - lifetime: Number, how long the data needs to be replaced measured in seconds
     - cas: String the CAS value
   */
-  async casValueToKey(key : string, value : string, lifeTime : number):Promise<ICacheObject>{
+  public async casValueToKey(key : string, value : string, lifeTime : number):Promise<ICacheObject>{
     // Transform the callback into a promise to be used in the controller
     return new Promise((resolve,reject) =>{
       // Using memcached api 
@@ -127,6 +122,10 @@ export class CacheService {
         
       });
     });
+  }
+
+  public getHello(): string {
+    return 'Hello World!';
   }
 
 
