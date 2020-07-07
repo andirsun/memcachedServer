@@ -1,4 +1,4 @@
-import { Controller, Get, Res, HttpStatus, Query, Post, Body, Put } from '@nestjs/common';
+import { Controller, Get, Res, HttpStatus, Query, Post, Body, Put, Delete } from '@nestjs/common';
 import { CacheService } from '../application/cache.service';
 import { CreateCacheObjectDTO } from '../domain/dto/cacheObject.dto';
 @Controller('cache')
@@ -234,6 +234,30 @@ export class CacheController {
             }
           });
         }
+      })
+      .catch(err=>{
+        // handling promise error
+        return res.status(HttpStatus.BAD_REQUEST).json({
+          response: false,
+          content: {
+            err
+          }
+        });
+      });
+  }
+  /* purge the expired keys */
+  @Delete('/flushServer')
+  async flushServer(@Res() res){
+    //Memcache service powered by memcache api
+    this.cacheService.flushServer()
+      .then(value =>{
+        return res.status(HttpStatus.OK).json({
+          response: true,
+          content: {
+            value
+          }
+        });
+       
       })
       .catch(err=>{
         // handling promise error

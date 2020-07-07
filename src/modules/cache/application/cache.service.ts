@@ -124,6 +124,18 @@ export class CacheService {
     });
   }
 
+  /*
+    Flush the server
+  */
+  public async flushServer() {
+    return new Promise((resolve,reject) =>{
+      memcached.flush((err,response)=>{
+        if (err) reject(err);
+        resolve(response)
+      });
+    });
+    
+  }
   public getHello(): string {
     return 'Hello World!';
   }
