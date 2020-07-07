@@ -28,7 +28,10 @@
 							"value": "3600",
 							"type": "text"
 						}
-					]
+					],
+					"options": {
+						"urlencoded": {}
+					}
 				},
 				"url": {
 					"raw": "http://localhost:3000/cache/setKey",
@@ -81,10 +84,13 @@
 				"header": [],
 				"body": {
 					"mode": "urlencoded",
-					"urlencoded": []
+					"urlencoded": [],
+					"options": {
+						"urlencoded": {}
+					}
 				},
 				"url": {
-					"raw": "http://localhost:3000/cache/getsKey?key=anderKey2",
+					"raw": "http://localhost:3000/cache/getsKey?key=nombre",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -97,7 +103,7 @@
 					"query": [
 						{
 							"key": "key",
-							"value": "anderKey2"
+							"value": "nombre"
 						}
 					]
 				}
@@ -127,7 +133,10 @@
 							"value": "3600",
 							"type": "text"
 						}
-					]
+					],
+					"options": {
+						"urlencoded": {}
+					}
 				},
 				"url": {
 					"raw": "http://localhost:3000/cache/replaceKeyValue",
@@ -162,7 +171,10 @@
 							"value": "def",
 							"type": "text"
 						}
-					]
+					],
+					"options": {
+						"urlencoded": {}
+					}
 				},
 				"url": {
 					"raw": "http://localhost:3000/cache/appendValueToKey",
@@ -197,7 +209,10 @@
 							"value": "123",
 							"type": "text"
 						}
-					]
+					],
+					"options": {
+						"urlencoded": {}
+					}
 				},
 				"url": {
 					"raw": "http://localhost:3000/cache/prependValueToKey",
@@ -237,7 +252,10 @@
 							"value": "3600",
 							"type": "text"
 						}
-					]
+					],
+					"options": {
+						"urlencoded": {}
+					}
 				},
 				"url": {
 					"raw": "http://localhost:3000/cache/casValueKey",
@@ -249,6 +267,46 @@
 					"path": [
 						"cache",
 						"casValueKey"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Items",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/cache/stats",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"cache",
+						"stats"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "flush server",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/cache/flushServer",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"cache",
+						"flushServer"
 					]
 				}
 			},
